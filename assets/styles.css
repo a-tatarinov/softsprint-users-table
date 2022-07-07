@@ -8,3 +8,6 @@ body{
 .not-active-circle {
   color: red;
 }
+.input-group button {
+  margin-left: 10px;
+}

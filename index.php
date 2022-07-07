@@ -19,6 +19,6 @@ foreach ($users_obj->index() as $key => $value) {
 unset($key);
 unset($value);
 
-var_dump($users);
+// var_dump($users);
 
 require_once 'views\home.php';

@@ -11,6 +11,9 @@
                     <h6 class="mr-2"><span>Users</span></h6>
                 </div>
                 <div class="e-table">
+
+                    <?php include 'block_change.php'; ?>
+
                     <div class="table-responsive table-lg mt-3">
                     <table class="table table-bordered">
                         <thead>
@@ -132,7 +135,10 @@
                         </tbody>
                     </table>
                     </div>
-                </div>
+
+                    <?php include 'block_change.php'; ?>
+
+                    </div>
                 </div>
             </div>
             </div>
