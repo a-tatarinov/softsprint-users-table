@@ -32,106 +32,38 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="align-middle">
-                            <div
-                                class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-1">
-                                <label class="custom-control-label" for="item-1"></label>
-                            </div>
-                            </td>
-                            <td class="text-nowrap align-middle">Adam Cotter</td>
-                            <td class="text-nowrap align-middle"><span>Active</span></td>
-                            <td class="text-center align-middle"><i class="fa fa-circle active-circle"></i></td>
-                            <td class="text-center align-middle">
-                            <div class="btn-group align-top">
-                                <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal"
-                                data-target="#user-form-modal">Edit</button>
-                                <button class="btn btn-sm btn-outline-secondary badge" type="button"><i
-                                    class="fa fa-trash"></i></button>
-                            </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="align-middle">
-                            <div
-                                class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-2">
-                                <label class="custom-control-label" for="item-2"></label>
-                            </div>
-                            </td>
-                            <td class="text-nowrap align-middle">Pauline Noble</td>
-                            <td class="text-nowrap align-middle"><span>User</span></td>
-                            <td class="text-center align-middle"><i class="fa fa-circle active-circle"></i></td>
-                            <td class="text-center align-middle">
-                            <div class="btn-group align-top">
-                                <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal"
-                                data-target="#user-form-modal">Edit</button>
-                                <button class="btn btn-sm btn-outline-secondary badge" type="button"><i
-                                    class="fa fa-trash"></i></button>
-                            </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="align-middle">
-                            <div
-                                class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-3">
-                                <label class="custom-control-label" for="item-3"></label>
-                            </div>
-                            </td>
-                            <td class="text-nowrap align-middle">Sherilyn Metzel</td>
-                            <td class="text-nowrap align-middle"><span>Admin</span></td>
-                            <td class="text-center align-middle"><i class="fa fa-circle not-active-circle"></i></td>
-                            <td class="text-center align-middle">
-                            <div class="btn-group align-top">
-                                <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal"
-                                data-target="#user-form-modal">Edit</button>
-                                <button class="btn btn-sm btn-outline-secondary badge" type="button"><i
-                                    class="fa fa-trash"></i></button>
-                            </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="align-middle">
-                            <div
-                                class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-4">
-                                <label class="custom-control-label" for="item-4"></label>
-                            </div>
-                            </td>
-                            <td class="text-nowrap align-middle">Terrie Boaler</td>
-                            <td class="text-nowrap align-middle"><span>Admin</span></td>
-                            <td class="text-center align-middle"><i class="fa fa-circle active-circle"></i></td>
-                            <td class="text-center align-middle">
-                            <div class="btn-group align-top">
-                                <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal"
-                                data-target="#user-form-modal">Edit</button>
-                                <button class="btn btn-sm btn-outline-secondary badge" type="button"><i
-                                    class="fa fa-trash"></i></button>
-                            </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="align-middle">
-                            <div
-                                class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-5">
-                                <label class="custom-control-label" for="item-5"></label>
-                            </div>
-                            </td>
-                            <td class="text-nowrap align-middle">Rutter Pude</td>
-                            <td class="text-nowrap align-middle"><span>User</span></td>
-                            <td class="text-center align-middle"><i class="fa fa-circle active-circle"></i></td>
-                            <td class="text-center align-middle">
-                            <div class="btn-group align-top">
-                                <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal"
-                                data-target="#user-form-modal">Edit</button>
-                                <button class="btn btn-sm btn-outline-secondary badge" type="button"><i
-                                    class="fa fa-trash"></i></button>
-                            </div>
-                            </td>
-                        </tr>
+                        <?php $i = 1; foreach ($users as $id => $user) : ?>
+                            <tr>
+                                <td class="align-middle">
+                                <div
+                                    class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                    <input type="checkbox" class="custom-control-input" id="item-<?= $i ?>" name="user[]" value="<?= $id ?>">
+                                    <label class="custom-control-label" for="item-<?= $i ?>"></label>
+                                </div>
+                                </td>
+                                <td class="text-nowrap align-middle">
+                                    <?= $user['first_name'] . ' ' . $user['last_name'] ?>
+                                </td>
+                                <td class="text-nowrap align-middle">
+                                    <span><?= $roles[$user['role_id']] ?></span>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <?php if($user['status']) : ?>
+                                        <i class="fa fa-circle active-circle"></i>
+                                    <?php else: ?>
+                                        <i class="fa fa-circle not-active-circle"></i>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="text-center align-middle">
+                                <div class="btn-group align-top">
+                                    <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal"
+                                    data-target="#user-form-modal">Edit</button>
+                                    <button class="btn btn-sm btn-outline-secondary badge" type="button"><i
+                                        class="fa fa-trash"></i></button>
+                                </div>
+                                </td>
+                            </tr>
+                        <?php $i++; endforeach; ?>
                         </tbody>
                     </table>
                     </div>
