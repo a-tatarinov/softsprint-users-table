@@ -9,13 +9,36 @@ class Users extends Model
 
     public function getUsers()
     {
+        $data = [];
+
         $sql = "SELECT * FROM `" . self::TABLEUSERS . "` ORDER BY `first_name`";
-        return $this->db->query($sql);
+
+        $query = $this->db->query($sql);
+
+        foreach ($query as $val) {
+            $data[$val['id']] = [
+                'first_name'    => $val['first_name'],
+                'last_name'     => $val['last_name'],
+                'role_id'       => $val['role_id'],
+                'status'        => $val['status']
+            ];
+        }
+
+        return $data;
     }
 
     public function getRoles()
     {
+        $data = [];
+
         $sql = "SELECT * FROM `" . self::TABLEROLES . "` ORDER BY `name`";
-        return $this->db->query($sql);
+
+        $query = $this->db->query($sql);
+
+        foreach ($query as $val) {
+            $data[$val['id']] = $val['name'];
+        }
+
+        return $data;
     }
 }

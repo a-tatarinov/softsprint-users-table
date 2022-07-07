@@ -4,13 +4,14 @@ namespace Controllers;
 
 class Users extends Controller
 {
-    public function getUsers()
+    public function index()
     {
-        return $this->model->getUsers();
-    }
+        $data = [];
 
-    public function getRoles()
-    {
-        return $this->model->getRoles();
+        $data['users'] = $this->model->getUsers();
+
+        $data['roles'] = $this->model->getRoles();
+
+        return $data;
     }
 }

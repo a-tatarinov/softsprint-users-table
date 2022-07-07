@@ -17,14 +17,19 @@ class Db
         $this->mysqli->set_charset('utf8');
     }
 
-    public function query($sql)
+    public function query($sql, $data = [])
     {
-        $query = $this->mysqli->query($sql);
+
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->execute();
+        $query = $stmt->get_result();
 
         if ($this->mysqli->errno) {
             die($this->mysqli->error);
             // die('Error SQL syntax!');
         }
+
+
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }
