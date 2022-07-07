@@ -2,14 +2,15 @@
 
 namespace Controllers;
 
-use Models;
-
-class Users
+class Users extends Controller
 {
     public function getUsers()
     {
-        $model = new Models\Users;
+        return $this->model->getUsers();
+    }
 
-        return $model->getUsers();
+    public function getRoles()
+    {
+        return $this->model->getRoles();
     }
 }
