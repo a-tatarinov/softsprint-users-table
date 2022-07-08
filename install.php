@@ -10,7 +10,7 @@ $table_users = "CREATE TABLE `softsprint`.`users` (
     PRIMARY KEY (`id`)) ENGINE = InnoDB";
 
 $users_val = "INSERT INTO `users` (`id`, `first_name`, `last_name`, `role_id`, `status`) VALUES
-(NULL, 'Adam', 'Cotter', '3', '1'),
+(NULL, 'Adam', 'Cotter', '2', '1'),
 (NULL, 'Pauline', 'Noble', '2', '1'),
 (NULL, 'Sherilyn', 'Metzel', '1', '0'),
 (NULL, 'Terrie', 'Boaler', '1', '1'),
@@ -23,4 +23,4 @@ $table_role = "CREATE TABLE `softsprint`.`users_roles` (
     `name` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     PRIMARY KEY (`id`)) ENGINE = InnoDB";
 
-$role_val = "INSERT INTO `users_roles` (`id`, `name`) VALUES (NULL, 'Admin'), (NULL, 'User'), (NULL, 'Active')";
+$role_val = "INSERT INTO `users_roles` (`id`, `name`) VALUES (NULL, 'Admin'), (NULL, 'User')";

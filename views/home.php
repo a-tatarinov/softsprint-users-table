@@ -21,31 +21,28 @@
                             <th class="align-top">
                             <div
                                 class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0">
-                                <input type="checkbox" class="custom-control-input" id="all-items">
+                                <input type="checkbox" class="custom-control-input" id="all-items" onclick="$('input[name=\'selected\[\]\']').prop('checked', this.checked);">
                                 <label class="custom-control-label" for="all-items"></label>
                             </div>
                             </th>
                             <th class="max-width">Name</th>
-                            <th class="sortable">Role</th>
                             <th>Status</th>
+                            <th class="sortable">Role</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php $i = 1; foreach ($users as $id => $user) : ?>
-                            <tr>
+                            <tr id="user<?=$id?>" data-id="<?=$id?>">
                                 <td class="align-middle">
                                 <div
                                     class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                    <input type="checkbox" class="custom-control-input" id="item-<?= $i ?>" name="user[]" value="<?= $id ?>">
+                                    <input type="checkbox" class="custom-control-input" id="item-<?= $i ?>" name="selected[]" value="<?= $id ?>">
                                     <label class="custom-control-label" for="item-<?= $i ?>"></label>
                                 </div>
                                 </td>
-                                <td class="text-nowrap align-middle">
+                                <td class="text-nowrap align-middle user-name">
                                     <?= $user['first_name'] . ' ' . $user['last_name'] ?>
-                                </td>
-                                <td class="text-nowrap align-middle">
-                                    <span><?= $roles[$user['role_id']] ?></span>
                                 </td>
                                 <td class="text-center align-middle">
                                     <?php if($user['status']) : ?>
@@ -54,12 +51,13 @@
                                         <i class="fa fa-circle not-active-circle"></i>
                                     <?php endif; ?>
                                 </td>
+                                <td class="text-nowrap align-middle">
+                                    <span><?= $roles[$user['role_id']] ?></span>
+                                </td>
                                 <td class="text-center align-middle">
                                 <div class="btn-group align-top">
-                                    <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal"
-                                    data-target="#user-form-modal">Edit</button>
-                                    <button class="btn btn-sm btn-outline-secondary badge" type="button"><i
-                                        class="fa fa-trash"></i></button>
+                                    <button class="btn btn-sm btn-outline-secondary badge user-edit" type="button"><i class="fa fa-pencil fa-lg"></i></button>
+                                    <button class="btn btn-sm btn-outline-secondary badge user-delete" type="button"><i class="fa fa-trash fa-lg"></i></button>
                                 </div>
                                 </td>
                             </tr>
@@ -77,37 +75,54 @@
         </div>
         <!-- User Form Modal -->
 
-        <div class="modal fade" id="user-form-modal" tabindex="-1" aria-labelledby="user-form-modal" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal fade" id="user-form-modal" tabindex="-1" aria-labelledby="UserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="UserModalLabel">Add user</h5>
+                <h5 class="modal-title" id="UserModalLabel"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form>
-                <div class="form-group">
-                    <label for="first-name" class="col-form-label">First Name:</label>
-                    <input type="text" class="form-control" id="first-name">
-                </div>
-                <div class="form-group">
-                    <label for="last-name" class="col-form-label">Last Name:</label>
-                    <input type="text" class="form-control" id="last-name">
-                </div>
 
-                </form>
+                            <!--
+                            <button id="basic-switch" class="mdc-switch mdc-switch--unselected mdc-theme--background" type="button" role="switch" aria-checked="false">
+                            <div class="mdc-switch__track"></div>
+                            <div class="mdc-switch__handle-track">
+                                <div class="mdc-switch__handle">
+                                <div class="mdc-switch__shadow">
+                                    <div class="mdc-elevation-overlay"></div>
+                                </div>
+                                <div class="mdc-switch__ripple"></div>
+                                <div class="mdc-switch__icons">
+                                    <svg class="mdc-switch__icon mdc-switch__icon--on" viewBox="0 0 24 24">
+                                    <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
+                                    </svg>
+                                    <svg class="mdc-switch__icon mdc-switch__icon--off" viewBox="0 0 24 24">
+                                    <path d="M20 13H4v-2h16v2z" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </button>
+                            <label for="basic-switch">off/on</label>
+                            -->
+
+
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
-            </div>
+            <div class="modal-footer"></div>
             </div>
         </div>
         </div>
-
+        </div>
     </div>
 </div>
+
+<select id="roles-values" style="display: none;">
+    <?php foreach ($roles as $id => $role) : ?>
+        <option value="<?=$id?>"><?=$role?></option>
+    <?php endforeach; ?>
+</select>
 
 <?php include_once 'footer.php'; ?>
