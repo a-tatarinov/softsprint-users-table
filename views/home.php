@@ -32,12 +32,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php $i = 1; foreach ($users as $id => $user) : ?>
-                            <tr id="user<?=$id?>" data-id="<?=$id?>">
+                        <?php $i = 1; foreach ($users as $user) : ?>
+                            <tr id="user<?= $user['id'] ?>" data-id="<?= $user['id'] ?>">
                                 <td class="align-middle">
                                 <div
                                     class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                    <input type="checkbox" class="custom-control-input" id="item-<?= $i ?>" name="selected[]" value="<?= $id ?>">
+                                    <input type="checkbox" class="custom-control-input" id="item-<?= $i ?>" name="selected[]" value="<?= $user['id'] ?>">
                                     <label class="custom-control-label" for="item-<?= $i ?>"></label>
                                 </div>
                                 </td>

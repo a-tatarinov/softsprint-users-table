@@ -2,7 +2,7 @@
 
 namespace Models;
 
-class Model
+abstract class Model
 {
     protected $db;
 

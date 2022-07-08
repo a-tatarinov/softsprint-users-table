@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-class Controller
+abstract class Controller
 {
     protected $model;
 
@@ -12,6 +12,7 @@ class Controller
         if (file_exists($className . '.php')) {
             $this->model = new $className;
         }
+        $this->model = new $className;
     }
 
 }

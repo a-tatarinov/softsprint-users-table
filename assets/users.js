@@ -55,12 +55,27 @@ function userModalForm(data = {
 }
 
 function deleteUser(id) {
-
-    console.log('deleteUser: ' + id);
+    $.ajax({
+        url: 'api?type=delete',
+        method: 'POST',
+        dataType: 'json',
+        data: {'id': id},
+        success: function(json){
+            console.log(json);
+            // userModalForm(json.user)
+        },
+        error: function(){
+            var text_title = 'Eror warning';
+            var html_body = 'Виникла помилка при підключенні до серверу!';
+            userModalShow(text_title, html_body);
+        }
+    });
 }
 
 function setUser() {
-    // var data = $('#user' + id + ' :input').serialize();
+    var data = $('#user-form-modal form').serialize();
+
+    console.log(data);
 
 
 }
@@ -80,9 +95,20 @@ $(function (){
     })
 
     $('button.user-edit').on('click', function() {
-        var user_id = $(this).closest('tr').data('id');
-        // console.log(user_id);
-        userModalForm();
+        $.ajax({
+            url: 'api?type=edit',
+            method: 'POST',
+            dataType: 'json',
+            data: {'id': $(this).closest('tr').data('id')},
+            success: function(json){
+                userModalForm(json.user)
+            },
+            error: function(){
+                var text_title = 'Eror warning';
+                var html_body = 'Виникла помилка при підключенні до серверу!';
+                userModalShow(text_title, html_body);
+            }
+        });
     })
 
     $('button.user-delete').on('click', function() {

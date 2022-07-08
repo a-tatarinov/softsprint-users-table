@@ -1,4 +1,6 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
 AddDefaultCharset UTF-8
-RewriteRule . index.php [L]
+RewriteEngine On
+
+RewriteRule ^api$ Controllers/Api.php [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)$ index.php?q=$1 [L,QSA]
