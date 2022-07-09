@@ -22,15 +22,15 @@ function userModalForm(data = {
 
     var html_body = '';
 
-    html_body += '<form>';
+    html_body += '<form id="user-form">';
     html_body += '<input type="hidden" name="id" value="' + data.id + '">';
-    html_body += '<div class="form-group">';
+    html_body += '<div class="form-group required">';
     html_body += '    <label for="first-name" class="col-form-label">First Name:</label>';
-    html_body += '    <input type="text" class="form-control" id="first-name" name="first_name" value="' + data.first_name + '" placeholder="Ім\'я">';
+    html_body += '    <input type="text" class="form-control" id="first-name" name="first_name" value="' + data.first_name + '" placeholder="Ім\'я" required>';
     html_body += '</div>';
-    html_body += '<div class="form-group">';
+    html_body += '<div class="form-group required">';
     html_body += '    <label for="last-name" class="col-form-label">Last Name:</label>';
-    html_body += '    <input type="text" class="form-control" id="last-name" name="last_name" value="' + data.last_name + '" placeholder="Прізвище">';
+    html_body += '    <input type="text" class="form-control" id="last-name" name="last_name" value="' + data.last_name + '" placeholder="Прізвище" required>';
     html_body += '</div>';
     html_body += '<fieldset class="form-group row">';
     html_body += '    <legend for="status" class="col-form-label col-sm-2 float-sm-left pt-0">Status</legend>';
@@ -43,13 +43,13 @@ function userModalForm(data = {
     html_body += '<div class="form-group row">';
     html_body += '     <label for="role" class="col-sm-2 col-form-label">Role</label>';
     html_body += '     <div class="col-sm-4">';
-    html_body += '        <select class="form-control" id="role" name="role">';
+    html_body += '        <select class="form-control" id="role" name="role_id">';
     html_body +=            $('#roles-values').html();
     html_body += '        </select>';
     html_body += '     </div>';
     html_body += '</div></form>';
 
-    var html_footer = '<button type="button" class="btn btn-success" onclick="setUser()">Save</button>';
+    var html_footer = '<input class="btn btn-success" type="submit" value="Save" form="user-form">';
 
     userModalShow(text_title, html_body, html_footer, data.role_id);
 }
@@ -72,14 +72,6 @@ function deleteUser(id) {
     });
 }
 
-function setUser() {
-    var data = $('#user-form-modal form').serialize();
-
-    console.log(data);
-
-
-}
-
 $(function (){
 
     $('input[name="selected\[\]"]').on('click', function() {
@@ -96,11 +88,12 @@ $(function (){
 
     $('button.user-edit').on('click', function() {
         $.ajax({
-            url: 'api?type=edit',
+            url: 'api?type=getuser',
             method: 'POST',
             dataType: 'json',
             data: {'id': $(this).closest('tr').data('id')},
             success: function(json){
+                console.log(json);
                 userModalForm(json.user)
             },
             error: function(){
@@ -141,6 +134,24 @@ $(function (){
         }
 
         //ajax edit
+    })
+
+    $('#user-form-modal').on('submit', '#user-form',function() {
+        $.ajax({
+            url: 'api?type=setuser',
+            method: 'POST',
+            dataType: 'json',
+            data: $('#user-form').serialize(),
+            success: function(json){
+                console.log(json);
+            },
+            error: function(){
+                var text_title = 'Eror warning';
+                var html_body = 'Виникла помилка при підключенні до серверу!';
+                userModalShow(text_title, html_body);
+            }
+        });
+        return false;
     })
 
     // mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-switch'));

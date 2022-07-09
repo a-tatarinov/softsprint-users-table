@@ -19,9 +19,6 @@ class Db
 
     public function query($sql, string $param = null, array $data = null)
     {
-
-        $res = [];
-
         $stmt = $this->mysqli->prepare($sql);
 
         if($param && $data) {
@@ -29,14 +26,7 @@ class Db
         }
 
         $stmt->execute();
-        $query = $stmt->get_result();
-        $res = $query->fetch_all(MYSQLI_ASSOC);
 
-        if ($this->mysqli->errno) {
-            die($this->mysqli->error);
-            // die('Error SQL syntax!');
-        }
-
-        return $res;
+        return $stmt->get_result();
     }
 }

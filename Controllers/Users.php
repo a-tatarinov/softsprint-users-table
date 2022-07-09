@@ -7,34 +7,37 @@ class Users extends Controller
 
     public function index()
     {
-        $data = [];
+        $result = [];
 
-        $data['users'] = $this->model->getUsers();
+        $result['users'] = $this->model->getUsers();
 
-        $data['roles'] = $this->model->getRoles();
+        $result['roles'] = $this->model->getRoles();
 
-        return $data;
+        return $result;
     }
 
     public function getUserById(int $id)
     {
-        $data = [
-            'status'    => true,
-            'error'     => null,
-            'user'      => $this->model->getUserById($id)
-        ];
+        $result = $this->model->getUserById($id);
 
-        return json_encode($data);
+        // throw new \Exception("Error Processing Request", 2);
+
+
+        return $result;
+    }
+
+    public function setUser(array $data)
+    {
+        if($data['id'] === 'null') $result = $this->model->addUser($data);
+        else $result = $this->model->updateUser($data);
+
+        return $result;
     }
 
     public function delUser(int $id)
     {
-        $data = [
-            'status'    => true,
-            'error'     => null,
-            'user'      => $this->model->delUser($id)
-        ];
+        $result = $this->model->delUser($id);
 
-        return json_encode($data);
+        return $result;
     }
 }

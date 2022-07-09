@@ -11,3 +11,8 @@ body{
 .input-group button {
   margin-left: 10px;
 }
+div.required .col-form-label:before {
+  content: '* ';
+  color: #F00;
+  font-weight: bold;
+}
