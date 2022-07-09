@@ -15,7 +15,7 @@ class Users extends Model
 
         $query = $this->db->query($sql);
 
-        foreach ($query->fetch_all(MYSQLI_ASSOC) as $val) {
+        foreach ($query->get_result()->fetch_all(MYSQLI_ASSOC) as $val) {
             $data[$val['id']] = $val['name'];
         }
 
@@ -28,7 +28,7 @@ class Users extends Model
 
         $query = $this->db->query($sql);
 
-        return $query->fetch_all(MYSQLI_ASSOC);
+        return $query->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
     public function getUserById(int $id)
@@ -37,7 +37,7 @@ class Users extends Model
 
         $query = $this->db->query($sql, 'i', [$id]);
 
-        return $query->fetch_array(MYSQLI_ASSOC);
+        return $query->get_result()->fetch_array(MYSQLI_ASSOC);
     }
 
     public function addUser(array $data)
@@ -48,26 +48,26 @@ class Users extends Model
 
         $query = $this->db->query($sql, 'ssii', [$data['first_name'], $data['last_name'], $data['role_id'], $status]);
 
-        return $query;
+        return $query->insert_id;
     }
 
-    public function updateUser(int $id)
+    public function updateUserById(array $data)
     {
-        // $query = [];
+        $sql = "UPDATE `" . self::TUSERS . "` SET `first_name` = ?, `last_name` = ?, `role_id` = ?, `status` = ? WHERE `id` = ? and last_insert_id(id)";
 
-        // $sql = "DELETE FROM `" . self::TUSERS . "` WHERE `id` = ?";
+        $status = $data['status'] ?? 0;
 
-        // $query = $this->db->query($sql, 'i', [$id]);
+        $query = $this->db->query($sql, 'ssiii', [$data['first_name'], $data['last_name'], $data['role_id'], $status, $data['id']]);
 
-        // return $query;
+        return $query->insert_id;
     }
 
-    public function delUser(int $id)
+    public function delUserById(int $id)
     {
         $sql = "DELETE FROM `" . self::TUSERS . "` WHERE `id` = ?";
 
         $query = $this->db->query($sql, 'i', [$id]);
 
-        return $query;
+        return $query->affected_rows;
     }
 }

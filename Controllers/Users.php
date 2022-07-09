@@ -29,14 +29,14 @@ class Users extends Controller
     public function setUser(array $data)
     {
         if($data['id'] === 'null') $result = $this->model->addUser($data);
-        else $result = $this->model->updateUser($data);
+        else $result = $this->model->updateUserById($data);
 
         return $result;
     }
 
-    public function delUser(int $id)
+    public function delUserById(int $id)
     {
-        $result = $this->model->delUser($id);
+        $result = $this->model->delUserById($id);
 
         return $result;
     }

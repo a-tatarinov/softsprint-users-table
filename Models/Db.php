@@ -27,6 +27,6 @@ class Db
 
         $stmt->execute();
 
-        return $stmt->get_result();
+        return $stmt;
     }
 }
