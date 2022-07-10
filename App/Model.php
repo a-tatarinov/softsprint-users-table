@@ -1,6 +1,6 @@
 <?php
 
-namespace Models;
+namespace App;
 
 abstract class Model
 {
@@ -8,6 +8,6 @@ abstract class Model
 
     public function __construct()
     {
-        $this->db = new Db;
+        $this->db = new Models\Db;
     }
 }

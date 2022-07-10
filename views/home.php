@@ -1,6 +1,7 @@
 <?php include_once 'header.php'; ?>
 
 <div class="container">
+    <span id="popup_content"></span>
     <div class="row flex-lg-nowrap">
         <div class="col">
         <div class="row flex-lg-nowrap">
@@ -18,7 +19,7 @@
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th class="align-top">
+                            <th class="align-top text-center">
                             <div
                                 class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0">
                                 <input type="checkbox" class="custom-control-input" id="all-items" onclick="$('input[name=\'selected\[\]\']').prop('checked', this.checked);">
@@ -32,19 +33,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php $i = 1; foreach ($users as $user) : ?>
+                        <?php foreach ($users as $user) : ?>
                             <tr id="user<?= $user['id'] ?>" data-id="<?= $user['id'] ?>">
-                                <td class="align-middle">
-                                <div
-                                    class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                    <input type="checkbox" class="custom-control-input" id="item-<?= $i ?>" name="selected[]" value="<?= $user['id'] ?>">
-                                    <label class="custom-control-label" for="item-<?= $i ?>"></label>
+                                <td class="align-middle text-center">
+                                <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                    <input type="checkbox" class="custom-control-input" id="item-<?= $user['id'] ?>" name="selected[]" value="<?= $user['id'] ?>" />
+                                    <label class="custom-control-label" for="item-<?= $user['id'] ?>"></label>
                                 </div>
                                 </td>
                                 <td class="text-nowrap align-middle user-name">
                                     <?= $user['first_name'] . ' ' . $user['last_name'] ?>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle user-status">
                                     <?php if($user['status']) : ?>
                                         <i class="fa fa-circle active-circle"></i>
                                     <?php else: ?>
@@ -61,7 +61,7 @@
                                 </div>
                                 </td>
                             </tr>
-                        <?php $i++; endforeach; ?>
+                        <?php endforeach; ?>
                         </tbody>
                     </table>
                     </div>

@@ -3,14 +3,14 @@
 // error_reporting(0);
 error_reporting(E_ALL);
 
-if($_SERVER['REQUEST_URI'] != "/dz3/") {
+if ($_SERVER['REQUEST_URI'] != "/dz3/") {
 //    header("Location: /",TRUE,301);
    header("Location: /dz3/", true, 301);
 }
 
 require_once 'autoload.php';
 
-$users_obj = new Controllers\Users;
+$users_obj = new App\Controllers\Users;
 
 foreach ($users_obj->index() as $key => $value) {
    ${$key} = $value;

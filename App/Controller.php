@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace App;
 
 abstract class Controller
 {
@@ -8,7 +8,7 @@ abstract class Controller
 
     public function __construct()
     {
-        $className = 'Models\\' . (new \ReflectionClass($this))->getShortName();
+        $className = 'App\Models\\' . (new \ReflectionClass($this))->getShortName();
         if (file_exists($className . '.php')) {
             $this->model = new $className;
         }

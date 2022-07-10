@@ -1,6 +1,8 @@
 <?php
 
-function AutoLoadClasses ($className) {
-    require_once __DIR__.'/'.$className.'.php';
+function AutoLoadClasses ($class)
+{
+    require_once __DIR__.'/'.$class.'.php';
 }
+
 spl_autoload_register('AutoLoadClasses');

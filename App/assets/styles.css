@@ -2,10 +2,10 @@ body{
   margin-top:20px;
   background:#f8f8f8
 }
-.active-circle {
+i.active-circle {
   color: green;
 }
-.not-active-circle {
+i.not-active-circle {
   color: grey;
 }
 .input-group button {
@@ -15,4 +15,11 @@ div.required .col-form-label:before {
   content: '* ';
   color: #F00;
   font-weight: bold;
+}
+#popup_content {
+	position: fixed;
+	z-index: 99;
+	right: 5%;
+	top: 10%;
+  max-width: 20%;
 }

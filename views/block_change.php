@@ -3,7 +3,7 @@
         <select class="form-control">
             <option value="*" selected>Please Select</option>
             <option value="active">1. Set active</option>
-            <option value="notactive">2. Set not active</option>
+            <option value="noactive">2. Set not active</option>
             <option value="delete">3. Delete</option>
         </select>
         <button type="button" class="btn btn-success user-edit-set">OK</button>

@@ -1,22 +1,25 @@
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['type'])) {
-    require_once '../autoload.php';
+    require_once '../../autoload.php';
 
-    $user_obj = new Controllers\Users;
+    $user_obj = new App\Controllers\Users;
 
     $result = null;
 
     try {
         switch($_GET['type']) {
             case('getuser') :
-                $result['user'] = $user_obj->getUserById($_POST['id']);
+                $result = $user_obj->getUserById($_POST['id']);
                 break;
             case('setuser') :
-                $result['id'] = $user_obj->setUser($_POST);
+                $result = $user_obj->setUser($_POST);
                 break;
             case('delete') :
-                $result['id'] = $user_obj->delUserById($_POST['id']);
+                $result = $user_obj->deleteUsers($_POST['id']);
+                break;
+            case('update') :
+                $result = $user_obj->updateUsers();
                 break;
         }
 
