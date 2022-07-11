@@ -1,7 +1,7 @@
 <?php
 
-// error_reporting(0);
-error_reporting(E_ALL);
+error_reporting(0);
+// error_reporting(E_ALL);
 
 if ($_SERVER['REQUEST_URI'] != "/dz3/") {
 //    header("Location: /",TRUE,301);
