@@ -13,7 +13,7 @@ function userModalShow(text_title, html_body, html_footer = '', role_id = 0) {
 }
 
 function createUserForm(data = {
-        'id': null,
+        'id': 0,
         'first_name': '',
         'last_name': '',
         'role_id': 0,
@@ -28,11 +28,11 @@ function createUserForm(data = {
     html_body += '<input type="hidden" name="id" value="' + data.id + '">';
     html_body += '<div class="form-group required">';
     html_body += '    <label for="first-name" class="col-form-label">First Name:</label>';
-    html_body += '    <input type="text" class="form-control" id="first-name" name="first_name" value="' + data.first_name + '" placeholder="Ім\'я" required>';
+    html_body += '    <input type="text" class="form-control" id="first-name" name="first_name" value="' + data.first_name + '" placeholder="Ім\'я" autocomplete="off" data-toggle="popover" data-placement="bottom" data-content="Невірно заповнене поле" required />';
     html_body += '</div>';
     html_body += '<div class="form-group required">';
     html_body += '    <label for="last-name" class="col-form-label">Last Name:</label>';
-    html_body += '    <input type="text" class="form-control" id="last-name" name="last_name" value="' + data.last_name + '" placeholder="Прізвище" required>';
+    html_body += '    <input type="text" class="form-control" id="last-name" name="last_name" value="' + data.last_name + '" placeholder="Прізвище" autocomplete="off" data-toggle="popover" data-placement="bottom" data-content="Невірно заповнене поле" required />';
     html_body += '</div>';
     html_body += '<fieldset class="form-group row">';
     html_body += '    <legend for="status" class="col-form-label col-sm-2 float-sm-left pt-0">Status</legend>';
@@ -78,12 +78,15 @@ function deleteUser(id) {
         success: function(json){
             if (json.status) {
                 $('#user-form-modal').modal('hide');
-                $('#user' + id).fadeOut('slow', () => $(this).remove());
+                $('#user' + json.id).fadeOut('slow', () => $(this).remove());
                 popup('Користувача <strong>' + user_name + '</strong> видалено!', 'success');
+            }
+            if (json.error) {
+                if (json.error.code != 100) alert('Code Error: ' + json.error['code'] + '\n\rMessage: ' + json.error['message']);
             }
         },
         error: function(){
-            var text_title = 'Eror warning';
+            var text_title = 'Попередження про помилку';
             var html_body = 'Виникла помилка при підключенні до серверу!';
             userModalShow(text_title, html_body);
         }
@@ -135,9 +138,12 @@ $(function () {
                         }
                     });
                 }
+                if (json.error) {
+                    if (json.error.code != 100) alert('Code Error: ' + json.error['code'] + '\n\rMessage: ' + json.error['message']);
+                }
             },
             error: function(){
-                var text_title = 'Eror warning';
+                var text_title = 'Попередження про помилку';
                 var html_body = 'Виникла помилка при підключенні до серверу!';
                 userModalShow(text_title, html_body);
             }
@@ -155,10 +161,13 @@ $(function () {
             dataType: 'json',
             data: {'id': $(this).closest('tr').data('id')},
             success: function(json){
-                createUserForm(json.user);
+                if (json.status) createUserForm(json.user);
+                if (json.error) {
+                    alert('Code Error: ' + json.error['code'] + '\n\rMessage: ' + json.error['message']);
+                }
             },
             error: function(){
-                var text_title = 'Eror warning';
+                var text_title = 'Попередження про помилку';
                 var html_body = 'Виникла помилка при підключенні до серверу!';
                 userModalShow(text_title, html_body);
             }
@@ -181,6 +190,10 @@ $(function () {
             url: 'api?type=setuser',
             method: 'POST',
             dataType: 'json',
+            beforeSend: function() {
+                $('#first-name').removeClass('error').popover('hide');
+                $('#last-name').removeClass('error').popover('hide');
+            },
             data: $('#user-form').serialize(),
             success: function(json){
                 if (json.status) {
@@ -223,10 +236,22 @@ $(function () {
                     $('#user-form-modal').modal('hide');
                     popup(text, 'success');
                 }
-                console.log(json);
+                if (json.error) {
+                    if (json.error['code'] === 400) {
+                        message = JSON.parse(json.error['message']);
+                        if (!message.first_name) {
+                            $('#first-name').val(message.first_name).addClass('error').popover('show');
+                        }
+                        if (!message.last_name) {
+                            $('#last-name').val(message.last_name).addClass('error').popover('show');
+                        }
+                    } else {
+                        alert('Code Error: ' + json.error['code'] + '\n\rMessage: ' + json.error['message']);
+                    }
+                }
             },
             error: function(){
-                var text_title = 'Eror warning';
+                var text_title = 'Попередження про помилку';
                 var html_body = 'Виникла помилка при підключенні до серверу!';
                 userModalShow(text_title, html_body);
             }

@@ -9,18 +9,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['type'])) {
 
     try {
         switch($_GET['type']) {
-            case('getuser') :
-                $result = $user_obj->getUserById($_POST['id']);
+            case('getuser'):
+                $result = $user_obj->getUserById();
                 break;
-            case('setuser') :
-                $result = $user_obj->setUser($_POST);
+            case('setuser'):
+                $result = $user_obj->setUser();
                 break;
-            case('delete') :
-                $result = $user_obj->deleteUsers($_POST['id']);
-                break;
-            case('update') :
+            case('update'):
                 $result = $user_obj->updateUsers();
                 break;
+            case('delete'):
+                $result = $user_obj->deleteUsers();
+                break;
+            default:
+                throw new \Exception("Not found method", 400);
         }
 
         echo json_encode(array_merge(['status' => true, 'error' => null], $result));

@@ -18,28 +18,55 @@ class Users extends Controller
         return $result;
     }
 
-    public function getUserById(int $id)
+    public function getUserById()
     {
-        $result['user'] = $this->model->getUserById($id);
+        $result = [];
 
-        // throw new \Exception("Error Processing Request", 2);
-
-
-        return $result;
-    }
-
-    public function setUser(array $data)
-    {
-        $data['status'] = $data['status'] ?? 0;
-
-        $result['user'] = $data;
-        if ($data['id'] === 'null') {
-            $result['user']['id'] = $this->model->addUser($data);
+        if (isset($_POST['id']) && is_numeric($_POST['id'])) {
+            $result['user'] = $this->model->getUserById((int) $_POST['id']);
         } else {
-            $result['user']['id'] = $this->model->updateUserById($data);
+            throw new \Exception("Error Bad Request", 400);
         }
 
-        return $result;
+        if ($result['user']) return $result;
+        else throw new \Exception("Not found user", 100);
+    }
+
+    public function setUser()
+    {
+        if (!isset($_POST['first_name']) || !isset($_POST['last_name']) || !isset($_POST['role_id'])) {
+            throw new \Exception("Error Bad Request", 400);
+        }
+
+        $result = [];
+
+        $first_name = htmlspecialchars(trim(strip_tags($_POST['first_name'])));
+        $last_name = htmlspecialchars(trim(strip_tags($_POST['last_name'])));
+
+        if (!$first_name || !$last_name) {
+            throw new \Exception(json_encode([
+                'first_name'    => $first_name,
+                'last_name'     => $last_name
+            ]), 400);
+        }
+
+        $result = [
+            'id'            => (int) $_POST['id'] ?? null,
+            'first_name'    => $first_name,
+            'last_name'     => $last_name,
+            'role_id'       => (int) $_POST['role_id'] ?? 2,
+            'status'        => (int) $_POST['status'] ?? 0
+        ];
+
+        if ($result['id']) {
+            $result['id'] = $this->model->updateUserById($result);
+        } else {
+            $result['id'] = $this->model->addUser($result);
+        }
+
+        if (!$result['id']) throw new \Exception("Error Bad Request", 400);
+
+        return ['user' => $result];
     }
 
     public function updateUsers()
@@ -48,7 +75,7 @@ class Users extends Controller
 
         $ids = implode(', ', $selected);
 
-        $operation = $_POST['operation'];
+        $operation = htmlspecialchars($_POST['operation']);
 
         if ($operation === 'active') {
             $query = $this->model->updateUsersByColumn('status', 1, $ids);
@@ -56,21 +83,35 @@ class Users extends Controller
             $query = $this->model->updateUsersByColumn('status', 0, $ids);
         } elseif ($operation === 'delete') {
             $query = $this->model->deleteUsers($ids);
-        }
-
-        if ($query > 0) {
-            $result['id'] = $_POST['selected'];
         } else {
-            ///Ошибка
+            throw new \Exception("Not found method", 400);
         }
 
-        return $result;
+        if ($query === 0) {
+            throw new \Exception("Users not updated", 100);
+        } elseif ($query === -1) {
+            throw new \Exception("Error Bad Request", 400);
+        }
+
+        return ['id' => $selected];
     }
 
-    public function deleteUsers(int $id)
+    public function deleteUsers()
     {
-        $result['id'] = $this->model->deleteUsers((int) $id);
+        $id = (int) $_POST['id'] ?? null;
 
-        return $result;
+        if ($id !== null) {
+            $query = $this->model->deleteUsers($id);
+        } else {
+            throw new \Exception("Error Bad Request", 400);
+        }
+
+        if ($query === 0) {
+            throw new \Exception("Users not deleted", 100);
+        } elseif ($query === -1) {
+            throw new \Exception("Error Bad Request", 400);
+        }
+
+        return ['id' => $id];
     }
 }

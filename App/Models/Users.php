@@ -62,7 +62,7 @@ class Users extends Model
 
     public function updateUsersByColumn(string $column_name, int $value, string $ids)
     {
-        $sql = "UPDATE `" . self::TUSERS . "` SET `" . $column_name ."` = ? WHERE `id` IN (" .$ids . ")";
+        $sql = "UPDATE `" . self::TUSERS . "` SET `" . $column_name . "` = ? WHERE `id` IN (" . $ids . ")";
 
         $query = $this->db->query($sql, 'i', [$value]);
 

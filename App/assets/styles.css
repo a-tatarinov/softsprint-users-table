@@ -23,6 +23,9 @@ div.required .col-form-label:before {
 	top: 10%;
   max-width: 20%;
 }
+#user-form input.error {
+  border: 2px solid red;
+}
 .google-switch input[type="checkbox"] {
   display: none;
   visibility: hidden; }
