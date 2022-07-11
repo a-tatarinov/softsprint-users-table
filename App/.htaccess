@@ -1,0 +1,5 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} !.*/Api.php
+RewriteCond %{REQUEST_URI} !.*\.(js|css)
+RewriteRule ^(.+)$ /index.php [L,QSA]
