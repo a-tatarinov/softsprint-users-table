@@ -18,6 +18,11 @@ class Users extends Controller
         return $result;
     }
 
+    public function install()
+    {
+        return $this->model->install();
+    }
+
     public function getUserById()
     {
         $result = [];
@@ -60,11 +65,12 @@ class Users extends Controller
 
         if ($result['id']) {
             $result['id'] = $this->model->updateUserById($result);
+            if (!$result['id']) throw new \Exception("Not found user", 100);
         } else {
             $result['id'] = $this->model->addUser($result);
+            if (!$result['id']) throw new \Exception("Error Bad Request", 400);
         }
 
-        if (!$result['id']) throw new \Exception("Error Bad Request", 400);
 
         return ['user' => $result];
     }

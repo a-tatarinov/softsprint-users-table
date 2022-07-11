@@ -36,5 +36,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['type'])) {
         ]);
     }
 } else {
-    header("Location: /dz3/", true, 301);
+    header("Location: /", true, 301);
 }

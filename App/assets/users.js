@@ -78,7 +78,7 @@ function deleteUser(id) {
         success: function(json){
             if (json.status) {
                 $('#user-form-modal').modal('hide');
-                $('#user' + json.id).fadeOut('slow', () => $(this).remove());
+                $('#user' + json.id).fadeOut('slow', function() {$(this).remove()});
                 popup('Користувача <strong>' + user_name + '</strong> видалено!', 'success');
             }
             if (json.error) {
@@ -134,7 +134,7 @@ $(function () {
                         } else if (operation === 'noactive') {
                             $('#user' + item + ' td.user-status i.active-circle').removeClass('active-circle').addClass('not-active-circle');
                         } else if (operation === 'delete') {
-                            $('#user' + item).fadeOut('slow', () => $(this).remove());
+                            $('#user' + item).fadeOut('slow', function() {$(this).remove()});
                         }
                     });
                 }

@@ -21,6 +21,8 @@ class Db
     {
         $stmt = $this->mysqli->prepare($sql);
 
+        if (!$stmt) die('Request execution error!');
+
         if ($types && $vars) {
             $stmt->bind_param($types, ...$vars);
         }
