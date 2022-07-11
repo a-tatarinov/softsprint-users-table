@@ -37,9 +37,10 @@ function createUserForm(data = {
     html_body += '<fieldset class="form-group row">';
     html_body += '    <legend for="status" class="col-form-label col-sm-2 float-sm-left pt-0">Status</legend>';
     html_body += '    <div class="col-sm-10">';
-    html_body += '        <div class="form-check">';
-    html_body += '           <input class="form-check-input" type="checkbox" id="status" name="status" value="1" ' + (data.status ? 'checked' : '') + '/>';
-    html_body += '        </div>';
+    html_body += '        <label class="google-switch">';
+    html_body += '            <input type="checkbox" id="status" name="status" value="1" ' + (data.status ? 'checked' : '') + ' />';
+    html_body += '            <span class="switcher"></span>';
+    html_body += '        </label>';
     html_body += '    </div>';
     html_body += '</fieldset>';
     html_body += '<div class="form-group row">';
@@ -232,6 +233,4 @@ $(function () {
         });
         return false;
     })
-
-    // mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-switch'));
 })
