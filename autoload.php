@@ -2,7 +2,7 @@
 
 function AutoLoadClasses ($class)
 {
-    require_once __DIR__.'/'.$class.'.php';
+    require_once __DIR__.'/'.str_replace('\\', '/', $class).'.php';
 }
 
 spl_autoload_register('AutoLoadClasses');
