@@ -59,7 +59,7 @@ class Users extends Controller
             'id'            => (int) $_POST['id'] ?? null,
             'first_name'    => $first_name,
             'last_name'     => $last_name,
-            'role_id'       => (int) $_POST['role_id'] ?? 2,
+            'role_id'       => (int) $_POST['role_id'],
             'status'        => (int) $_POST['status'] ?? 0
         ];
 
