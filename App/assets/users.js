@@ -20,7 +20,8 @@ function createUserForm(data = {
         'status': 0
     }) {
 
-    var text_title = 'Add/Edit user';
+    if (data.id) var text_title = 'Edit user';
+    else var text_title = 'Add user';
 
     var html_body = '';
 
@@ -82,7 +83,7 @@ function deleteUser(id) {
                 popup('Користувача <strong>' + user_name + '</strong> видалено!', 'success');
             }
             if (json.error) {
-                if (json.error.code != 100) alert('Code Error: ' + json.error['code'] + '\n\rMessage: ' + json.error['message']);
+                if (json.error.code != 100) userModalShow('Error Message', json.error['message']);
             }
         },
         error: function(){
@@ -95,7 +96,7 @@ function deleteUser(id) {
 
 $(function () {
 
-    $('input[name="selected\[\]"]').on('click', function() {
+    $('tbody').on('click', 'input[name="selected\[\]"]', function() {
         if (!$(this).prop('checked') ) {
             $('#all-items').prop('checked', false);
         } else if ($('input[name="selected\[\]"]').length == $('input[name="selected\[\]"]:checked').length) {
@@ -139,7 +140,7 @@ $(function () {
                     });
                 }
                 if (json.error) {
-                    if (json.error.code != 100) alert('Code Error: ' + json.error['code'] + '\n\rMessage: ' + json.error['message']);
+                    if (json.error.code != 100) userModalShow('Error Message', json.error['message']);
                 }
             },
             error: function(){
@@ -163,7 +164,7 @@ $(function () {
             success: function(json){
                 if (json.status) createUserForm(json.user);
                 if (json.error) {
-                    alert('Code Error: ' + json.error['code'] + '\n\rMessage: ' + json.error['message']);
+                    userModalShow('Error Message', json.error['message']);
                 }
             },
             error: function(){
@@ -207,7 +208,7 @@ $(function () {
                     html += '    <td class="text-nowrap align-middle user-name">';
                     html +=         json.user['first_name'] + ' ' + json.user['last_name'];
                     html += '    </td>';
-                    html += '    <td class="text-center align-middle">';
+                    html += '    <td class="text-center align-middle user-status">';
                     if (json.user['status']) {
                     html += '       <i class="fa fa-circle active-circle"></i>';
                     } else {
@@ -230,6 +231,7 @@ $(function () {
                         var text = 'Дані успішно оновлено!';
                     } else {
                         $('tbody').append(html);
+                        $('#all-items').prop('checked', false);
                         var text = 'Новового користувача додано!'
                     }
 
@@ -246,7 +248,7 @@ $(function () {
                             $('#last-name').val(message.last_name).addClass('error').popover('show');
                         }
                     } else {
-                        alert('Code Error: ' + json.error['code'] + '\n\rMessage: ' + json.error['message']);
+                        userModalShow('Error Message', json.error['message']);
                     }
                 }
             },
