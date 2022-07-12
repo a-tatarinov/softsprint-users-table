@@ -4,9 +4,9 @@ error_reporting(0);
 
 require_once 'autoload.php';
 
-if ($_SERVER['REQUEST_URI'] !== '/dz3/') {
+if ($_SERVER['REQUEST_URI'] !== '/') {
 
-   if (rtrim($_SERVER['REQUEST_URI'], '/') === '/dz3/install') {
+   if (rtrim($_SERVER['REQUEST_URI'], '/') === '/install') {
       $users_obj = new App\Controllers\Users;
       $users_obj->install();
    }
