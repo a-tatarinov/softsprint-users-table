@@ -20,7 +20,4 @@ foreach ($users_obj->index() as $key => $value) {
    ${$key} = $value;
 }
 
-unset($key);
-unset($value);
-
-require_once 'views\home.php';
+require_once 'views/home.php';
