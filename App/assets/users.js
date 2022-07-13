@@ -201,7 +201,11 @@ $(function () {
                     html = '<tr id="user' + json.user['id'] + '" data-id="' + json.user['id'] + '">';
                     html += '    <td class="align-middle text-center">';
                     html += '    <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">';
-                    html += '        <input type="checkbox" class="custom-control-input" id="item-' + json.user['id'] + '" name="selected[]" value="' + json.user['id'] + '" />';
+                    if ( $('#user' + json.user['id'] + ' input[name="selected\[\]"]').prop('checked') ) {
+                        html += '        <input type="checkbox" class="custom-control-input" id="item-' + json.user['id'] + '" name="selected[]" value="' + json.user['id'] + '" checked />';
+                    } else {
+                        html += '        <input type="checkbox" class="custom-control-input" id="item-' + json.user['id'] + '" name="selected[]" value="' + json.user['id'] + '" />';
+                    }
                     html += '        <label class="custom-control-label" for="item-' + json.user['id'] + '"></label>';
                     html += '    </div>';
                     html += '    </td>';
