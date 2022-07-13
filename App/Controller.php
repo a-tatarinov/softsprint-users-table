@@ -9,10 +9,9 @@ abstract class Controller
     public function __construct()
     {
         $className = 'App\Models\\' . (new \ReflectionClass($this))->getShortName();
-        if (file_exists($className . '.php')) {
+        if (class_exists($className)) {
             $this->model = new $className;
         }
-        $this->model = new $className;
     }
 
 }
