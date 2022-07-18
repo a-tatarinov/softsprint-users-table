@@ -83,7 +83,8 @@ function deleteUser(id) {
                 popup('Користувача <strong>' + user_name + '</strong> видалено!', 'success');
             }
             if (json.error) {
-                if (json.error.code != 100) userModalShow('Error Message', json.error['message']);
+                if (json.error.code == 100) $('#user' + id).fadeOut('slow', function() {$(this).remove()});
+                userModalShow('Error Message', json.error['message']);
             }
         },
         error: function(){
@@ -140,7 +141,7 @@ $(function () {
                     });
                 }
                 if (json.error) {
-                    if (json.error.code != 100) userModalShow('Error Message', json.error['message']);
+                    userModalShow('Error Message', json.error['message']);
                 }
             },
             error: function(){

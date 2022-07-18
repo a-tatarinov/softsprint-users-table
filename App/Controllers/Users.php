@@ -34,7 +34,7 @@ class Users extends Controller
         }
 
         if ($result['user']) return $result;
-        else throw new \Exception("Not found user", 100);
+        else throw new \Exception("Users not found", 100);
     }
 
     public function setUser()
@@ -65,7 +65,7 @@ class Users extends Controller
 
         if ($result['id']) {
             $result['id'] = $this->model->updateUserById($result);
-            if (!$result['id']) throw new \Exception("Not found user", 100);
+            if (!$result['id']) throw new \Exception("Users not found", 100);
         } else {
             $result['id'] = $this->model->addUser($result);
             if (!$result['id']) throw new \Exception("Error Bad Request", 400);
@@ -94,7 +94,7 @@ class Users extends Controller
         }
 
         if ($query === 0) {
-            throw new \Exception("Users not updated", 100);
+            throw new \Exception("Users not found", 100);
         } elseif ($query === -1) {
             throw new \Exception("Error Bad Request", 400);
         }
@@ -113,7 +113,7 @@ class Users extends Controller
         }
 
         if ($query === 0) {
-            throw new \Exception("Users not deleted", 100);
+            throw new \Exception("Users not found", 100);
         } elseif ($query === -1) {
             throw new \Exception("Error Bad Request", 400);
         }
