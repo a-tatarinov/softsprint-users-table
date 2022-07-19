@@ -94,7 +94,7 @@ class Users extends Controller
         }
 
         if ($query === 0) {
-            throw new \Exception("Users not found", 100);
+            throw new \Exception("Users not update", 100);
         } elseif ($query === -1) {
             throw new \Exception("Error Bad Request", 400);
         }
