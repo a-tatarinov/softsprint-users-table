@@ -89,6 +89,7 @@ class Users extends Controller
             $query = $this->model->updateUsersByColumn('status', 0, $ids);
         } elseif ($operation === 'delete') {
             $query = $this->model->deleteUsers($ids);
+            if ($query === 0) throw new \Exception("Users not fount", 100);
         } else {
             throw new \Exception("Not found method", 400);
         }

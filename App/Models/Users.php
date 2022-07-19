@@ -26,7 +26,7 @@ class Users extends Model
 
     public function addUser(array $data)
     {
-        $sql = "INSERT INTO `" . self::TUSERS . "` (`first_name`, `last_name`, `role_id`, `status`) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO `" . self::TUSERS . "` (`first_name`, `last_name`, `role_id`, `status`, `date_add`) VALUES (?, ?, ?, ?, NOW())";
 
         $query = $this->db->query($sql, 'ssii', [$data['first_name'], $data['last_name'], $data['role_id'], $data['status']]);
 
@@ -35,7 +35,7 @@ class Users extends Model
 
     public function getUsers()
     {
-        $sql = "SELECT * FROM `" . self::TUSERS . "` ORDER BY `first_name`";
+        $sql = "SELECT * FROM `" . self::TUSERS . "` ORDER BY `id`";
 
         $query = $this->db->query($sql);
 
@@ -71,7 +71,7 @@ class Users extends Model
 
     public function deleteUsers($ids)
     {
-        $sql = "DELETE FROM `" . self::TUSERS . "` WHERE `id` IN (" .$ids . ")";
+        $sql = "DELETE FROM `" . self::TUSERS . "` WHERE `id` IN (" . $ids . ")";
 
         $query = $this->db->query($sql);
 
@@ -86,6 +86,7 @@ class Users extends Model
             `last_name` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
             `role_id` INT(10) NOT NULL,
             `status` TINYINT(1) NOT NULL DEFAULT '0',
+            `date_add` DATE NOT NULL
             PRIMARY KEY (`id`)) ENGINE = InnoDB";
         $this->db->query($table_users);
 

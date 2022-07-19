@@ -139,6 +139,7 @@ $(function () {
                             $('#user' + item).fadeOut('slow', function() {$(this).remove()});
                         }
                     });
+                    $('table input[type=checkbox').prop('checked', false);
                 }
                 if (json.error) {
                     userModalShow('Error Message', json.error['message']);
